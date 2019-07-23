@@ -55,14 +55,16 @@
       tplroot ~ ':tofs:files_switch',
       default_files_switch
   ) %}
-  {#- Lookup source_files (v2), files (v1), or fallback to source_files parameter #}
+  {#- Lookup source_files (v2), files (v1), or fallback to an empty list #}
   {%- set src_files = salt['config.get'](
       tplroot ~ ':tofs:source_files:' ~ lookup,
       salt['config.get'](
           tplroot ~ ':tofs:files:' ~ lookup,
-          source_files
+          []
       )
   ) %}
+  {#- Append source_files #}
+  {%- set src_files = src_files + source_files %}
   {#- Only add to [''] when supporting older TOFS implementations #}
   {%- set path_prefix_exts = [''] %}
   {%- if v1_path_prefix != '' %}

@@ -11,6 +11,11 @@
 include:
   - nginx.pkg
   - nginx.service
+  {%- if nginx.snippets is defined %}
+  - nginx.snippets
+  {%- endif %}
+  - nginx.servers
+  - nginx.certificates
 
 passenger_install:
   pkg.installed:
